@@ -27,3 +27,5 @@ require('./data/reddit-db');
 // require('./controllers/replies.js')(app);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+module.exports = app;
