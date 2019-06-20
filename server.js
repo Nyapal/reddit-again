@@ -7,7 +7,7 @@ const app = express();
 const port = 3000
 
 mongoose.connect('mongodb://localhost/reddit2', { useNewUrlParser: true });
-//idk why its broke
+//commiting bc i had a bug for a few weeks and finally got unblcoked'
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
