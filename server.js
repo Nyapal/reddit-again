@@ -22,6 +22,7 @@ app.set('view engine', 'hbs');
 // })
 
 require('./controllers/posts.js')(app);
+require('./controllers/comments.js')
 require('./data/reddit-db');
 // require('./controllers/comments.js')(app);
 // require('./controllers/auth.js')(app);
