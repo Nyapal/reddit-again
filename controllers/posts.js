@@ -4,13 +4,29 @@ module.exports = (app) => {
   
   // CREATE
   app.post('/posts/new', (req, res) => {
-    // INSTANTIATE INSTANCE OF POST MODEL
-    const post = new Post(req.body);
-    // SAVE INSTANCE OF POST MODEL TO DB
-    post.save((err, post) => {
-      // REDIRECT TO THE ROOT
-      return res.redirect(`/`);
-    })
+    if(req.user) {
+      // INSTANTIATE INSTANCE OF POST MODEL
+      const post = new Post(req.body);
+      post.author = req.user_id
+      
+      // SAVE INSTANCE OF POST MODEL TO DB
+      post
+        .save()
+        .then(post => {
+          return User.findById(req.user._id)
+        })
+        .then(user => {
+          user.posts.unshift(post)
+          user.save()
+          // REDIRECT TO THE NEW POST
+          return res.redirect(`/posts/${post._id}`);
+        })
+        .catch(err => {
+          console.log(err.message)
+        })
+      } else {
+        return res.status(401);
+      }
   });
 
   // CREATE FORM
