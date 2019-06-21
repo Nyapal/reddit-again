@@ -1,4 +1,7 @@
+require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -7,26 +10,18 @@ const app = express();
 const port = 3000
 
 mongoose.connect('mongodb://localhost/reddit2', { useNewUrlParser: true });
-//commiting bc i had a bug for a few weeks and finally got unblcoked'
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
 app.use(expressValidator())
 app.engine('hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', 'hbs');
 
-
-// const Post = mongoose.model('Post', {
-//   title: String,
-//   body: String
-// })
-
 require('./controllers/posts.js')(app);
-require('./controllers/comments.js')
+require('./controllers/comments.js')(app);
+require('./controllers/auth.js')(app);
 require('./data/reddit-db');
-// require('./controllers/comments.js')(app);
-// require('./controllers/auth.js')(app);
-// require('./controllers/replies.js')(app);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

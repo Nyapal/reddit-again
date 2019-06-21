@@ -1,8 +1,7 @@
 <div class="row">
-  <div class="col-sm-6 col-sm-offset-3">
+  <div class="">
     <a href="{{post.url}}" class="lead">{{post.title}}</a>
     <p>{{post.summary}}</p>
-
     <form action="/posts/{{post._id}}/comments" method="post">
       <textarea class='form-control' name="content" placeholder="Comment"></textarea>
       <div class="text-right">
